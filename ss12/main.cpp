@@ -52,8 +52,8 @@ int main() {
 	char menu;
 	do {
 		cout << "[1] Englische Episodentitel und Inhalt einer beliebigen Episode ausgeben" << endl
-			 << "[2] Nur Rückblicke einer beliebigen Episode ausgeben" << endl
-			 << "[3] Die 15 häufigsten Wörter der Rückblicke einer Episode ausgeben" << endl
+			 << "[2] Nur RÃ¼ckblicke einer beliebigen Episode ausgeben" << endl
+			 << "[3] Die 15 hÃ¤ufigsten WÃ¶rter der RÃ¼ckblicke einer Episode ausgeben" << endl
 			 << "[4] Hauptpersonen aller Episoden ausgeben" << endl << endl
 			 << "[9] Programm beenden" << endl
 			 << "Ihre Wahl: ";
@@ -68,32 +68,50 @@ int main() {
 				cout << ep.second.getNumber() << "\t" << ep.second.getEnglishtitle() << endl;
 			}
 			do{
-				cout << "Welche Episode möchten Sie sehen? (1.01 - 1.25) " << endl;
+				cout << "Welche Episode mÃ¶chten Sie sehen? (1.01 - 1.25): ";
 				cin >> ep;
 
-				if (episode.find(ep) == episode.end()) {
-					cerr << "Episode existiert nicht. Bitte Eingabe wiederholen." << endl << endl;
+				while (episode.find(ep) == episode.end()) {
+					cout << "\nEpisode existiert nicht. \nBitte Eingabe wiederholen: ";
+					cin >> ep;
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				}
-				else {
-					cout << "Episode Nummer: " << episode[ep].getNumber() << endl
-						<< "Deutscher Titel: " << episode[ep].getGermantitle() << endl
-						<< "Englischer Titel: " << episode[ep].getEnglishtitle() << endl
-						<< "Inhalt: " << episode[ep].getDescription() << endl;
-				}
+				
+				cout << "Episode Nummer: " << episode[ep].getNumber() << endl
+					 << "Deutscher Titel: " << episode[ep].getGermantitle() << endl
+					 << "Englischer Titel: " << episode[ep].getEnglishtitle() << endl
+					 << "Inhalt: " << episode[ep].getDescription() << endl;
+				
 			} while (ep == "9");
 
 			break;
 		case '2':
-			cout << " **** Nur Rückblicke einer Episode ausgeben ****" << endl
-				<< "Von welcher Episode sollen die Rückblicke ausgegeben werden: ";
+			cout << " **** Nur RÃ¼ckblicke einer Episode ausgeben ****" << endl
+				<< "Von welcher Episode sollen die RÃ¼ckblicke ausgegeben werden? (1.01 - 1.25): ";
 			cin >> ep;
+
+			while (episode.find(ep) == episode.end()) {
+				cout << "\nEpisode existiert nicht. \nBitte Eingabe wiederholen: ";
+				cin >> ep;
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
 			cout << endl << episode[ep].getFlashback();
 
 			break;
 		case '3':
-			cout << " **** Die 15 häufigsten Wörter ausgeben ****" << endl
-				<< "Von welcher Episode sollen die 15 häufigsten Wörter ausgegeben werden: ";
+			cout << " **** Die 15 hÃ¤ufigsten WÃ¶rter ausgeben ****" << endl
+				<< "Von welcher Episode sollen die 15 hÃ¤ufigsten WÃ¶rter ausgegeben werden? (1.01 - 1.25): ";
 			cin >> ep;
+
+			while (episode.find(ep) == episode.end()) {
+				cout << "\nEpisode existiert nicht. \nBitte Eingabe wiederholen: ";
+				cin >> ep;
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			}
+
 			cout << endl << episode[ep].getFrequentWords();
 			break;
 
@@ -105,6 +123,8 @@ int main() {
 			for (auto epi : episode) {
 				cout << epi.second.getMainCharacters();
 				 }
+			
+			cout << endl;
 
 			break;
 		case '9':
